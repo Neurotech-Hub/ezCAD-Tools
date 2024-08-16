@@ -330,25 +330,40 @@ document.addEventListener('DOMContentLoaded', function () {
         const halfWidth = containerWidth / 2;
         const halfHeight = containerHeight / 2;
 
-        // Calculate the maximum value to normalize all points
-        const maxX = Math.max(x1_2 + x2_3, x4_5 + x5_6, x7_8 + x8_9);
-        const maxY = Math.max(y1_4 + y4_7, y2_5 + y5_8, y3_6 + y6_9);
+        // Exaggeration factor to amplify offsets relative to the center
+        const exaggerationFactor = 3;
+
+        // Calculate initial positions with exaggeration
+        const points = {
+            "point-1": { x: halfWidth - (x1_2 * exaggerationFactor), y: halfHeight - (y1_4 * exaggerationFactor) },
+            "point-2": { x: halfWidth, y: halfHeight - (y2_5 * exaggerationFactor) },
+            "point-3": { x: halfWidth + (x2_3 * exaggerationFactor), y: halfHeight - (y3_6 * exaggerationFactor) },
+            "point-4": { x: halfWidth - (x4_5 * exaggerationFactor), y: halfHeight },
+            "point-5": { x: halfWidth, y: halfHeight }, // center
+            "point-6": { x: halfWidth + (x5_6 * exaggerationFactor), y: halfHeight },
+            "point-7": { x: halfWidth - (x7_8 * exaggerationFactor), y: halfHeight + (y4_7 * exaggerationFactor) },
+            "point-8": { x: halfWidth, y: halfHeight + (y5_8 * exaggerationFactor) },
+            "point-9": { x: halfWidth + (x8_9 * exaggerationFactor), y: halfHeight + (y6_9 * exaggerationFactor) }
+        };
+
+        // Find the most extreme point relative to the container bounds
+        let maxX = 0;
+        let maxY = 0;
+
+        for (let pointId in points) {
+            const { x, y } = points[pointId];
+            maxX = Math.max(maxX, Math.abs(x - halfWidth));
+            maxY = Math.max(maxY, Math.abs(y - halfHeight));
+        }
 
         const maxDimension = Math.max(maxX, maxY);
-        const scaleFactor = Math.min(containerWidth / maxDimension, containerHeight / maxDimension) / 2;
+        const scaleFactor = Math.min(containerWidth / 2, containerHeight / 2) / maxDimension;
 
-        // Normalize positions of each point
-        const points = {
-            "point-1": { x: halfWidth - x1_2 * scaleFactor, y: halfHeight - y1_4 * scaleFactor },
-            "point-2": { x: halfWidth, y: halfHeight - y2_5 * scaleFactor },
-            "point-3": { x: halfWidth + x2_3 * scaleFactor, y: halfHeight - y3_6 * scaleFactor },
-            "point-4": { x: halfWidth - x4_5 * scaleFactor, y: halfHeight },
-            "point-5": { x: halfWidth, y: halfHeight }, // center
-            "point-6": { x: halfWidth + x5_6 * scaleFactor, y: halfHeight },
-            "point-7": { x: halfWidth - x7_8 * scaleFactor, y: halfHeight + y4_7 * scaleFactor },
-            "point-8": { x: halfWidth, y: halfHeight + y5_8 * scaleFactor },
-            "point-9": { x: halfWidth + x8_9 * scaleFactor, y: halfHeight + y6_9 * scaleFactor }
-        };
+        // Rescale points based on the most extreme point
+        for (let pointId in points) {
+            points[pointId].x = halfWidth + (points[pointId].x - halfWidth) * scaleFactor;
+            points[pointId].y = halfHeight + (points[pointId].y - halfHeight) * scaleFactor;
+        }
 
         // Update positions of the points
         for (let pointId in points) {
@@ -357,6 +372,7 @@ document.addEventListener('DOMContentLoaded', function () {
             point.style.top = points[pointId].y + 'px';
         }
     }
+
 
     function doCalculations() {
         updateAngle();
