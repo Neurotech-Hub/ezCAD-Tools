@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ezCAD Params Helper</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>ezCAD Params Helper</h1>
+
+        <div class="input-group">
+            <label for="target-size">Target Size (mm):</label>
+            <input type="number" id="target-size" name="target-size" step="0.01" value="100">
+            <label for="reset-measures" class="checkbox-label">
+                <input type="checkbox" id="reset-measures" style="width:15px;" checked>
+                Reset measures on change
+            </label>
+        </div>
+
+        <div class="image-placeholder">
+            <img src="ezCAD-Helpers/ezCAD-Helpers.001.jpeg" alt="Main Image" width="450">
+            <div class="rectangle-container">
+                <div id="point-1" class="point"></div>
+                <div id="point-2" class="point"></div>
+                <div id="point-3" class="point"></div>
+                <div id="point-4" class="point"></div>
+                <div id="point-5" class="point"></div>
+                <div id="point-6" class="point"></div>
+                <div id="point-7" class="point"></div>
+                <div id="point-8" class="point"></div>
+                <div id="point-9" class="point"></div>
+            </div>
+        </div>
+
+        <div class="tables-container">
+            <table class="measures-table">
+                <caption>X Measures</caption>
+                <tr>
+                    <td><label for="x1-2">1-2:</label></td>
+                    <td><input type="number" id="x1-2" step="0.01"></td>
+                    <td><label for="x2-3">2-3:</label></td>
+                    <td><input type="number" id="x2-3" step="0.01"></td>
+                </tr>
+                <tr>
+                    <td><label for="x4-5">4-5:</label></td>
+                    <td><input type="number" id="x4-5" step="0.01"></td>
+                    <td><label for="x5-6">5-6:</label></td>
+                    <td><input type="number" id="x5-6" step="0.01"></td>
+                </tr>
+                <tr>
+                    <td><label for="x7-8">7-8:</label></td>
+                    <td><input type="number" id="x7-8" step="0.01"></td>
+                    <td><label for="x8-9">8-9:</label></td>
+                    <td><input type="number" id="x8-9" step="0.01"></td>
+                </tr>
+            </table>
+
+            <table class="measures-table">
+                <caption>Y Measures</caption>
+                <tr>
+                    <td><label for="y1-4">1-4:</label></td>
+                    <td><input type="number" id="y1-4" step="0.01"></td>
+                    <td><label for="y4-7">4-7:</label></td>
+                    <td><input type="number" id="y4-7" step="0.01"></td>
+                </tr>
+                <tr>
+                    <td><label for="y2-5">2-5:</label></td>
+                    <td><input type="number" id="y2-5" step="0.01"></td>
+                    <td><label for="y5-8">5-8:</label></td>
+                    <td><input type="number" id="y5-8" step="0.01"></td>
+                </tr>
+                <tr>
+                    <td><label for="y3-6">3-6:</label></td>
+                    <td><input type="number" id="y3-6" step="0.01"></td>
+                    <td><label for="y6-9">6-9:</label></td>
+                    <td><input type="number" id="y6-9" step="0.01"></td>
+                </tr>
+            </table>
+        </div>
+
+        <hr>
+        <p style="text-align:center;">Images show shape of your rectangle.</p>
+        <br>
+
+        <div class="image-grid-section">
+            <div class="image-grid">
+                <!-- Angle Section -->
+                <div class="image-item">
+                    <label>Angle</label>
+                    <input type="text" id="x-angle" value="0.00" readonly>
+                    <img src="ezCAD-Helpers/ezCAD-Helpers.007.jpeg" alt="Image 1">
+                </div>
+
+                <!-- X Galvo Section -->
+                <div class="galvo-section">
+                    <h3>X Galvo</h3>
+                    <div class="image-item">
+                        <label>Distortion</label>
+                        <input type="text" id="x-distortion" value="0.00" readonly>
+                        <img src="ezCAD-Helpers/ezCAD-Helpers.004.jpeg" alt="Image 2">
+                    </div>
+                    <div class="image-item">
+                        <label>Paralellogram</label>
+                        <input type="text" id="x-paralellogram" value="0.00" readonly>
+                        <img src="ezCAD-Helpers/ezCAD-Helpers.003.jpeg" alt="Image 3">
+                    </div>
+                    <div class="image-item">
+                        <label>Trapezoid</label>
+                        <input type="text" id="x-trapezoid" value="0.00" readonly>
+                        <img src="ezCAD-Helpers/ezCAD-Helpers.006.jpeg" alt="Image 4">
+                    </div>
+                </div>
+
+                <!-- Y Galvo Section -->
+                <div class="galvo-section">
+                    <h3>Y Galvo</h3>
+                    <div class="image-item">
+                        <label>Distortion</label>
+                        <input type="text" id="y-distortion" value="0.00" readonly>
+                        <img src="ezCAD-Helpers/ezCAD-Helpers.004.jpeg" alt="Image 5" class="rotated-90">
+                    </div>
+                    <div class="image-item">
+                        <label>Paralellogram</label>
+                        <input type="text" id="y-paralellogram" value="0.00" readonly>
+                        <img src="ezCAD-Helpers/ezCAD-Helpers.008.jpeg" alt="Image 6">
+                    </div>
+                    <div class="image-item">
+                        <label>Trapezoid</label>
+                        <input type="text" id="y-trapezoid" value="0.00" readonly>
+                        <img src="ezCAD-Helpers/ezCAD-Helpers.009.jpeg" alt="Image 7">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
