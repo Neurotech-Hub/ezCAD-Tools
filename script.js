@@ -143,6 +143,30 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function calculateXScale() {
+        const x4_5 = parseFloat(document.getElementById('x4-5').value);
+        const x5_6 = parseFloat(document.getElementById('x5-6').value);
+        const targetSize = parseFloat(document.getElementById('target-size').value);
+
+        if (!targetSize || isNaN(x4_5) || isNaN(x5_6)) {
+            return 0; // Return 0 if any input is invalid
+        }
+        const xScale = ((x4_5 + x5_6) / targetSize) * 100;
+        return xScale.toFixed(2); // Return the result as a percentage with 2 decimal places
+    }
+
+    function calculateYScale() {
+        const y2_5 = parseFloat(document.getElementById('y2-5').value);
+        const y5_8 = parseFloat(document.getElementById('y5-8').value);
+        const targetSize = parseFloat(document.getElementById('target-size').value);
+
+        if (!targetSize || isNaN(y2_5) || isNaN(y5_8)) {
+            return 0; // Return 0 if any input is invalid
+        }
+        const yScale = ((y2_5 + y5_8) / targetSize) * 100;
+        return yScale.toFixed(2); // Return the result as a percentage with 2 decimal places
+    }
+
     function calculateXDistortion() {
         // Step 1: Retrieve the lengths of the x-segments from the input fields
         const x1_2 = parseFloat(document.getElementById('x1-2').value);
@@ -252,6 +276,23 @@ document.addEventListener('DOMContentLoaded', function () {
         const angle = calculateAngle();
         xAngleInput.value = angle;
         updateImageClassBasedOnAngle();
+    }
+
+    function updateScale() {
+        const xScalePercentage = calculateXScale();
+        const yScalePercentage = calculateYScale();
+
+        // Update the X scale input field
+        const xScaleInput = document.getElementById('x-scale');
+        if (xScaleInput) {
+            xScaleInput.value = xScalePercentage + '%';
+        }
+
+        // Update the Y scale input field
+        const yScaleInput = document.getElementById('y-scale');
+        if (yScaleInput) {
+            yScaleInput.value = yScalePercentage + '%';
+        }
     }
 
     // Function to update distortion values
@@ -369,10 +410,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-
-
     function doCalculations() {
         updateAngle();
+        updateScale();
         updateDistortions();
         updateParalellograms();
         updateTrapezoids();
