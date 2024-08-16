@@ -330,23 +330,20 @@ document.addEventListener('DOMContentLoaded', function () {
         const halfWidth = containerWidth / 2;
         const halfHeight = containerHeight / 2;
 
-        // Exaggeration factor to amplify offsets relative to the center
         const exaggerationFactor = 3;
 
-        // Calculate initial positions with exaggeration
         const points = {
             "point-1": { x: halfWidth - (x1_2 * exaggerationFactor), y: halfHeight - (y1_4 * exaggerationFactor) },
             "point-2": { x: halfWidth, y: halfHeight - (y2_5 * exaggerationFactor) },
             "point-3": { x: halfWidth + (x2_3 * exaggerationFactor), y: halfHeight - (y3_6 * exaggerationFactor) },
             "point-4": { x: halfWidth - (x4_5 * exaggerationFactor), y: halfHeight },
-            "point-5": { x: halfWidth, y: halfHeight }, // center
+            "point-5": { x: halfWidth, y: halfHeight },
             "point-6": { x: halfWidth + (x5_6 * exaggerationFactor), y: halfHeight },
             "point-7": { x: halfWidth - (x7_8 * exaggerationFactor), y: halfHeight + (y4_7 * exaggerationFactor) },
             "point-8": { x: halfWidth, y: halfHeight + (y5_8 * exaggerationFactor) },
             "point-9": { x: halfWidth + (x8_9 * exaggerationFactor), y: halfHeight + (y6_9 * exaggerationFactor) }
         };
 
-        // Find the most extreme point relative to the container bounds
         let maxX = 0;
         let maxY = 0;
 
@@ -359,19 +356,19 @@ document.addEventListener('DOMContentLoaded', function () {
         const maxDimension = Math.max(maxX, maxY);
         const scaleFactor = Math.min(containerWidth / 2, containerHeight / 2) / maxDimension;
 
-        // Rescale points based on the most extreme point
         for (let pointId in points) {
             points[pointId].x = halfWidth + (points[pointId].x - halfWidth) * scaleFactor;
             points[pointId].y = halfHeight + (points[pointId].y - halfHeight) * scaleFactor;
         }
 
-        // Update positions of the points
+        // Adjust positions to center the 10px point
         for (let pointId in points) {
             const point = document.getElementById(pointId);
-            point.style.left = points[pointId].x + 'px';
-            point.style.top = points[pointId].y + 'px';
+            point.style.left = (points[pointId].x - 5) + 'px';
+            point.style.top = (points[pointId].y - 5) + 'px';
         }
     }
+
 
 
     function doCalculations() {
