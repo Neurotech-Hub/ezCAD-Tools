@@ -177,13 +177,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const x8_9 = parseFloat(document.getElementById('x8-9').value);
 
         // Step 2: Calculate the average of the top and bottom x-segments
-        const topBottomAverage = (x1_2 + x2_3 + x7_8 + x8_9) / 4;
+        const topBottomAverage = (x1_2 + x2_3 + x7_8 + x8_9) / 2;
 
         // Step 3: Calculate the average of the middle x-segments
-        const middleAverage = (x4_5 + x5_6) / 2;
+        const middleAverage = (x4_5 + x5_6);
 
         // Step 4: Calculate the distortion
-        const xDistortion = middleAverage - topBottomAverage;
+        const xDistortion = -(middleAverage - topBottomAverage);
         return xDistortion.toFixed(2);
     }
 
@@ -197,13 +197,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const y6_9 = parseFloat(document.getElementById('y6-9').value);
 
         // Step 2: Calculate the average of the left and right y-segments
-        const leftRightAverage = (y1_4 + y4_7 + y3_6 + y6_9) / 4;
+        const leftRightAverage = (y1_4 + y4_7 + y3_6 + y6_9) / 2;
 
         // Step 3: Calculate the average of the middle y-segments
-        const middleAverage = (y2_5 + y5_8) / 2;
+        const middleAverage = (y2_5 + y5_8);
 
         // Step 4: Calculate the distortion
-        const yDistortion = middleAverage - leftRightAverage;
+        const yDistortion = -(middleAverage - leftRightAverage);
         return yDistortion.toFixed(2);
     }
 
@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const x8_9 = parseFloat(document.getElementById('x8-9').value);
 
         // Step 2: Calculate the parallelogram shift
-        const xParalellogram = (x2_3 + x7_8) - (x1_2 + x8_9);
+        const xParalellogram = -((x1_2 - x7_8) - (x2_3 - x8_9));
         return xParalellogram.toFixed(2);
     }
 
@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const y6_9 = parseFloat(document.getElementById('y6-9').value);
 
         // Step 2: Calculate the parallelogram shift
-        const yParalellogram = (y3_6 + y6_9) - (y1_4 + y4_7);
+        const yParalellogram = (y3_6 - y1_4) - (y6_9 - y4_7);
         return yParalellogram.toFixed(2);
     }
 
@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const x8_9 = parseFloat(document.getElementById('x8-9').value);
 
         // Step 2: Calculate the trapezoid shift
-        const xTrapezoid = (x1_2 + x2_3) - (x7_8 + x8_9);
+        const xTrapezoid = -((x1_2 + x2_3) - (x7_8 + x8_9));
 
         return xTrapezoid.toFixed(2);
     }
@@ -252,16 +252,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const y6_9 = parseFloat(document.getElementById('y6-9').value);
 
         // Step 2: Calculate the trapezoid shift
-        const yTrapezoid = (y1_4 + y4_7) - (y3_6 + y6_9);
+        const yTrapezoid = -((y1_4 + y4_7) - (y3_6 + y6_9));
 
         return yTrapezoid.toFixed(2);
     }
 
     // Function to update grid inputs based on target size
     function updateGridInputs() {
-        // Only proceed if the checkbox is checked
-        if (!resetMeasuresCheckbox.checked) return;
-
         const targetValue = parseFloat(targetSizeInput.value) || 0;
         const halfValue = targetValue / 2;
 
@@ -285,13 +282,13 @@ document.addEventListener('DOMContentLoaded', function () {
         // Update the X scale input field
         const xScaleInput = document.getElementById('x-scale');
         if (xScaleInput) {
-            xScaleInput.value = xScalePercentage + '%';
+            xScaleInput.value = xScalePercentage;
         }
 
         // Update the Y scale input field
         const yScaleInput = document.getElementById('y-scale');
         if (yScaleInput) {
-            yScaleInput.value = yScalePercentage + '%';
+            yScaleInput.value = yScalePercentage;
         }
     }
 
@@ -299,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateDistortions() {
         const xDistortionResult = parseFloat(calculateXDistortion());
         xDistortionInput.value = xDistortionResult;
-        if (xDistortionResult > 0) {
+        if (xDistortionResult < 0) {
             xDistortionImage.src = "ezCAD-Helpers/ezCAD-Helpers.004.jpeg";
         } else {
             xDistortionImage.src = "ezCAD-Helpers/ezCAD-Helpers.005.jpeg";
@@ -307,7 +304,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const yDistortionResult = parseFloat(calculateYDistortion());
         yDistortionInput.value = yDistortionResult;
-        if (yDistortionResult > 0) {
+        if (yDistortionResult < 0) {
             yDistortionImage.src = "ezCAD-Helpers/ezCAD-Helpers.004.jpeg";
         } else {
             yDistortionImage.src = "ezCAD-Helpers/ezCAD-Helpers.005.jpeg";
@@ -325,7 +322,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const yParalellogramResult = parseFloat(calculateYParalellogram());
         yParalellogramInput.value = yParalellogramResult;
-        if (yParalellogramResult > 0) {
+        if (yParalellogramResult < 0) {
             yParalellogramImage.classList.remove('mirror-y');
         } else {
             yParalellogramImage.classList.add('mirror-y');
@@ -335,7 +332,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateTrapezoids() {
         const xTrapezoidResult = parseFloat(calculateXTrapezoid());
         xTrapezoidInput.value = xTrapezoidResult;
-        if (xTrapezoidResult > 0) {
+        if (xTrapezoidResult < 0) {
             xTrapezoidImage.classList.add('mirror-y');
         } else {
             xTrapezoidImage.classList.remove('mirror-y');
@@ -343,7 +340,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const yTrapezoidResult = parseFloat(calculateYTrapezoid());
         yTrapezoidInput.value = yTrapezoidResult;
-        if (yTrapezoidResult > 0) {
+        if (yTrapezoidResult < 0) {
             yTrapezoidImage.classList.remove('mirror-x');
         } else {
             yTrapezoidImage.classList.add('mirror-x');
@@ -410,6 +407,25 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function updateOpacityBasedOnValue() {
+        // Select all image-item elements
+        const imageItems = document.querySelectorAll('.image-item');
+
+        imageItems.forEach(item => {
+            // Find the input element within the image-item
+            const input = item.querySelector('input[type="text"]');
+
+            if (input) {
+                // Check if the input value is zero
+                if (parseFloat(input.value) === 0) {
+                    item.style.opacity = '0.2';
+                } else {
+                    item.style.opacity = '1'; // Reset opacity if not zero
+                }
+            }
+        });
+    }
+
     function doCalculations() {
         updateAngle();
         updateScale();
@@ -417,6 +433,7 @@ document.addEventListener('DOMContentLoaded', function () {
         updateParalellograms();
         updateTrapezoids();
         updateRectangleVisualization();
+        updateOpacityBasedOnValue();
     }
 
     // Initial trigger for grid inputs and calculations on page load
@@ -432,5 +449,8 @@ document.addEventListener('DOMContentLoaded', function () {
             doCalculations();
         });
     });
+
+    const resetButton = document.getElementById('reset-measures-button');
+    resetButton.addEventListener('click', updateGridInputs);
 
 });
