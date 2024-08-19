@@ -426,6 +426,40 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    function convertUnits() {
+        // Check if the checkbox is checked
+        const usePercentage = document.getElementById('use-percentage').checked;
+
+        // Get the target size value
+        const targetSize = parseFloat(document.getElementById('target-size').value);
+
+        // If the checkbox is not checked or target size is invalid, return
+        if (!usePercentage || isNaN(targetSize) || targetSize === 0) {
+            return;
+        }
+
+        // Array of input IDs that need to be converted
+        const inputIds = [
+            'x-distortion',
+            'x-paralellogram',
+            'x-trapezoid',
+            'y-distortion',
+            'y-paralellogram',
+            'y-trapezoid'
+        ];
+
+        // Convert each value to a percentage of the target size
+        inputIds.forEach(id => {
+            const input = document.getElementById(id);
+            const value = parseFloat(input.value);
+            if (!isNaN(value)) {
+                const percentageValue = (value / targetSize) * 100;
+                input.value = percentageValue.toFixed(2) + '%';
+            }
+        });
+    }
+
+    // Example of your doCalculations function with convertUnits added
     function doCalculations() {
         updateAngle();
         updateScale();
@@ -434,6 +468,7 @@ document.addEventListener('DOMContentLoaded', function () {
         updateTrapezoids();
         updateRectangleVisualization();
         updateOpacityBasedOnValue();
+        convertUnits();  // Add convertUnits() at the end
     }
 
     // Initial trigger for grid inputs and calculations on page load
@@ -453,4 +488,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const resetButton = document.getElementById('reset-measures-button');
     resetButton.addEventListener('click', updateGridInputs);
 
+    const unitsCheck = document.getElementById('use-percentage');
+    unitsCheck.addEventListener('click', doCalculations);
 });
